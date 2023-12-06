@@ -79,7 +79,7 @@ public class Cliente extends JFrame implements ActionListener {
     }
 
     private void sendRequestWantStream(){
-        CelsoPacket packet = new CelsoPacket((byte) 0x1, null, 0, "".getBytes(),"".getBytes().length);
+        CelsoPacket packet = new CelsoPacket((byte) 0x1, null, 0, nodeData.getIps()[0].getBytes(),nodeData.getIps()[0].getBytes().length);
         int size = packet.getPacketBytes(cBuf);
         DatagramPacket senddp;
         try {
