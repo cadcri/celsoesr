@@ -76,4 +76,8 @@ public class CelsoPacket implements Serializable {
     public byte getType() {
         return header[8];
     }
+
+    public void setType(byte type){
+        header[8] = type;
+    }
 }

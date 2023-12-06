@@ -3,9 +3,12 @@ package src;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.HashSet;
 import java.util.Set;
+
+import static src.Nodo.PORT;
 
 
 public class RP  {
@@ -22,8 +25,11 @@ public class RP  {
     public RP() {
         super();
 
+        // teste
+        ips.add("10.0.0.21");
+
         try {
-            RTPsocket = new DatagramSocket(Nodo.PORT);
+            RTPsocket = new DatagramSocket(PORT);
             while (true) {
                 DatagramPacket rcvdp = new DatagramPacket(buff, buff.length);
                 RTPsocket.receive(rcvdp);
@@ -42,6 +48,13 @@ public class RP  {
                     System.out.println("nbsaltos: "+packetData);
 
                     if (!ips.isEmpty()){
+                        packet.setType((byte)0x2);
+                        int size = packet.getPacketBytes(buff);
+                        for (String ip : ips){
+                            DatagramPacket senddp = new DatagramPacket(buff, size, InetAddress.getByName(ip), Nodo.PORT);
+                            RTPsocket.send(senddp);
+                            System.out.println("sendinf packet");
+                        }
 
                     }
                 }
