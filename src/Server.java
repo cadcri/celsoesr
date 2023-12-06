@@ -24,6 +24,7 @@ public class Server {
     public Server(NodeData nodeData) {
         this.data = nodeData;
         try {
+            video = new VideoStream("movie.Mjpeg");
             RTPsocket = new DatagramSocket();
 
             while(true){
