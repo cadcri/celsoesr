@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class RP  {
@@ -14,6 +16,8 @@ public class RP  {
 
     DatagramSocket RTPsocket;
     byte[] buff = new byte[150000];
+
+    private Set<String> ips = new HashSet<>();
 
     public RP() {
         super();
@@ -36,12 +40,17 @@ public class RP  {
                 if (type == 0x0){
                     // receved a stream video now we must send it back to IPs
                     System.out.println("nbsaltos: "+packetData);
+
+                    if (!ips.isEmpty()){
+
+                    }
                 }
                 if (type == 0x1) {
                     // receved an IP adress that now must be served
 
                     //decoder packet data et trouver celui qui match avec le voisin
                     System.out.println("receved a streaming request from "+packetData);
+                    ips.add(packetData);
                 }
             }
 
