@@ -56,8 +56,6 @@ public class Nodo {
                 String packetData = new String(string);
 
                 if (type == 0x0){
-                    // stream video to RP packet
-                    System.out.println("nbsaltos: "+packetData);
 
                     // change nbsaltos to nbsaltos+1 and send to prox
                     int video_byte_size = packet.getVideoBytes(sBuf);
@@ -65,6 +63,7 @@ public class Nodo {
                     int size = newPacket.getPacketBytes(sBuf);
                     rcvdp = new DatagramPacket(sBuf, sBuf.length);
                     DatagramPacket senddp = new DatagramPacket(rcvdp.getData(), rcvdp.getLength(), InetAddress.getByName(data.getProx().trim()), PORT);
+                    System.out.println("Receved stream image "+packetData+", sending it to "+data.getProx());
                     RTPsocket.send(senddp);
                 }
                 if (type == 0x1){

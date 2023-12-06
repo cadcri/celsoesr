@@ -43,6 +43,7 @@ public class Server {
                 CelsoPacket packet = new CelsoPacket((byte) 0x0, buff, image_length, "0".getBytes(), "0".getBytes().length);
                 int size = packet.getPacketBytes(buff);
                 DatagramPacket senddp = new DatagramPacket(buff, size, InetAddress.getByName(data.getProx()), Nodo.PORT);
+
                 RTPsocket.send(senddp);
                 Thread.sleep(FRAME_PERIOD);
             }
