@@ -1,5 +1,8 @@
 package src;
 
+import src.data.Data;
+import src.data.NodeData;
+
 import java.io.*;
 import java.net.*;
 import java.awt.*;
@@ -9,16 +12,10 @@ import javax.swing.Timer;
 
 public class Cliente extends JFrame implements ActionListener {
 
-    static InetAddress ServerIP;
+    NodeData nodeData;
 
     public static void main(String[] argv) {
-        try {
-             ServerIP = InetAddress.getByName("10.0.18.10");
-            //ServerIP = InetAddress.getByName("localhost");
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        new Cliente(argv[0], 25000);
+        new Cliente(Data.data.get(argv[0]), Nodo.PORT);
     }
 
     JLabel iconLabel;
@@ -28,28 +25,24 @@ public class Cliente extends JFrame implements ActionListener {
     byte[] cBuf;
 
     DatagramSocket SendSocket;
-    String myIP;
 
-    public Cliente(String myIP, int port) {
+    public Cliente(NodeData nodeData, int port) {
         super("Clientes");
+        this.nodeData = nodeData;
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
 
-        JButton setupButton = new JButton("Setup");
         JButton playButton = new JButton("Play");
         JButton pauseButton = new JButton("Pause");
-        JButton tearButton = new JButton("Teardown");
         JPanel mainPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
         iconLabel = new JLabel();
         buttonPanel.setLayout(new GridLayout(1, 0));
-        buttonPanel.add(setupButton);
         buttonPanel.add(playButton);
         buttonPanel.add(pauseButton);
-        buttonPanel.add(tearButton);
         iconLabel.setIcon(null);
         mainPanel.setLayout(null);
         mainPanel.add(iconLabel);
@@ -63,11 +56,6 @@ public class Cliente extends JFrame implements ActionListener {
 
         playButton.addActionListener(e -> {
             cTimer.start();
-        });
-        tearButton.addActionListener(e -> {
-            sendRequestWantStream(false);
-            cTimer.stop();
-            System.exit(0);
         });
         cTimer = new Timer(20, this);
         cTimer.setInitialDelay(0);
@@ -86,19 +74,19 @@ public class Cliente extends JFrame implements ActionListener {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        this. myIP = myIP;
 
-        sendRequestWantStream(true);
+        sendRequestWantStream();
     }
 
-    private void sendRequestWantStream(boolean want){
-        CelsoPacket packet;
-        if (want)
-            packet = new CelsoPacket((byte) 0x0, null, 0, myIP.getBytes(),myIP.getBytes().length);
-        else
-            packet = new CelsoPacket((byte) 0x1, null, 0, myIP.getBytes(),myIP.getBytes().length);
+    private void sendRequestWantStream(){
+        CelsoPacket packet = new CelsoPacket((byte) 0x1, null, 0, "".getBytes(),"".getBytes().length);
         int size = packet.getPacketBytes(cBuf);
-        DatagramPacket senddp = new DatagramPacket(cBuf, size, ServerIP, 25000);
+        DatagramPacket senddp;
+        try {
+            senddp = new DatagramPacket(cBuf, size, InetAddress.getByName(nodeData.getProx()), 25000);
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
         try {
             SendSocket.send(senddp);
         } catch (IOException e) {
