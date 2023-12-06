@@ -17,7 +17,7 @@ public class Server {
     VideoStream video; //src.VideoStream object used to access video frames
     static int FRAME_PERIOD = 100; //Frame period of the video to stream, in ms
     static int VIDEO_LENGTH = 500; //length of the video in frames
-    byte[] buff; //buffer used to store the images to send to the client
+    byte[] buff = new byte[25000]; //buffer used to store the images to send to the client
 
     DatagramSocket RTPsocket;
 
