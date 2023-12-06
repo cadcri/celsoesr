@@ -23,6 +23,8 @@ public class Server {
 
     public Server(NodeData nodeData) {
         this.data = nodeData;
+
+        // logo que receba o getprox, fazer isto
         try {
             video = new VideoStream("movie.Mjpeg");
             RTPsocket = new DatagramSocket();

@@ -74,6 +74,28 @@ public class Nodo {
                 if (type == 0x1){
                     // ip to add to table
                     System.out.println("Receved stream request from "+packetData+", sending it to "+data.getProx());
+
+                    // decoder la liste des ip de packet data et trouver celui qui match avec ses voisins
+                    // puis l'ajouter a cette liste
+                    ips.add(packetData);
+
+                    if (ips.size() == 1){
+                        // envoyer packer demande stream
+                        // transformer la liste des IPs de node data em un seul string et envoyer ca au lieu de ips[0]
+                        CelsoPacket packet2 = new CelsoPacket((byte) 0x1, null, 0, data.getIps()[0].getBytes(),data.getIps()[0].getBytes().length);
+                        int size = packet2.getPacketBytes(sBuf);
+                        DatagramPacket senddp;
+                        try {
+                            senddp = new DatagramPacket(sBuf, size, InetAddress.getByName(data.getProx()), 25000);
+                        } catch (UnknownHostException e) {
+                            throw new RuntimeException(e);
+                        }
+                        try {
+                            RTPsocket.send(senddp);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
                 if (type == 0x2) {

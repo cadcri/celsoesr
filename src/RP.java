@@ -34,8 +34,14 @@ public class RP  {
 
                 byte type = packet.getType();
                 if (type == 0x0){
-                    // stream video to RP packet
+                    // receved a stream video now we must send it back to IPs
                     System.out.println("nbsaltos: "+packetData);
+                }
+                if (type == 0x1) {
+                    // receved an IP adress that now must be served
+
+                    //decoder packet data et trouver celui qui match avec le voisin
+                    System.out.println("receved a streaming request from "+packetData);
                 }
             }
 
