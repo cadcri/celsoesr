@@ -22,6 +22,8 @@ public class RP  {
 
     private Set<String> ips = new HashSet<>();
 
+    private int saltosMax=100;
+
     public RP() {
         super();
 
@@ -46,8 +48,13 @@ public class RP  {
                 if (type == 0x0){
                     // receved a stream video now we must send it back to IPs
                     System.out.println("nbsaltos: "+packetData);
+                    int nbsaltos = Integer.parseInt(packetData);
 
-                    if (!ips.isEmpty()){
+                    if (nbsaltos<saltosMax){
+                        saltosMax = nbsaltos;
+                    }
+
+                    if (!ips.isEmpty() && nbsaltos == saltosMax){
                         packet.setType((byte)0x2);
                         int size = packet.getPacketBytes(buff);
                         for (String ip : ips){
@@ -55,7 +62,6 @@ public class RP  {
                             RTPsocket.send(senddp);
                             System.out.println("sendinf packet");
                         }
-
                     }
                 }
                 if (type == 0x1) {

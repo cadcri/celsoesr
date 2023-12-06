@@ -80,6 +80,7 @@ public class Nodo {
                     ips.add(packetData);
 
                     if (ips.size() == 1){
+                        System.out.println("first client. sending want to stream..");
                         // envoyer packer demande stream
                         // transformer la liste des IPs de node data em un seul string et envoyer ca au lieu de ips[0]
                         CelsoPacket packet2 = new CelsoPacket((byte) 0x1, null, 0, data.getIps()[0].getBytes(),data.getIps()[0].getBytes().length);
@@ -99,7 +100,16 @@ public class Nodo {
                 }
 
                 if (type == 0x2) {
-                    // stream video to clients
+
+                    if (!ips.isEmpty()){
+                        packet.setType((byte)0x2);
+                        int size = packet.getPacketBytes(sBuf);
+                        for (String ip : ips){
+                            DatagramPacket senddp = new DatagramPacket(sBuf, size, InetAddress.getByName(ip), Nodo.PORT);
+                            RTPsocket.send(senddp);
+                            System.out.println("sendinf packet");
+                        }
+                    }
 
                 }
 
