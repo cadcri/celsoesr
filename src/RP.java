@@ -19,7 +19,7 @@ public class RP  {
         super();
 
         try {
-            RTPsocket = new DatagramSocket();
+            RTPsocket = new DatagramSocket(Nodo.PORT);
             while (true) {
                 DatagramPacket rcvdp = new DatagramPacket(buff, buff.length);
                 RTPsocket.receive(rcvdp);
