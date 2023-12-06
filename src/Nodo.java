@@ -73,7 +73,7 @@ public class Nodo {
                 }
                 if (type == 0x1){
                     // ip to add to table
-
+                    System.out.println("Receved stream request from "+packetData+", sending it to "+data.getProx());
                 }
 
                 if (type == 0x2) {
