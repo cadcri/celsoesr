@@ -9,6 +9,7 @@ public class NodeData {
     public NodeData(String[] adj, String prox, String[] ips){
         this.adj = adj;
         this.prox = prox;
+        this.ips = ips;
     }
 
     public String[] getAdj(){
