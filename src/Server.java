@@ -49,6 +49,7 @@ public class Server {
 
         } catch (Exception ex) {
             System.out.println("Exception caught: " + ex.getStackTrace().toString());
+            ex.printStackTrace();
             System.exit(0);
         }
     }
