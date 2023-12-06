@@ -10,7 +10,7 @@ public class Data {
     static {
         data.put("server1", new NodeData(new String[0],"10.0.8.21", new String[]{"10.0.8.20"}));
         data.put("server2", new NodeData(new String[0],"10.0.9.21", new String[0]));
-        data.put("client1", new NodeData(new String[0],"10.0.0.20", new String[0]));
+        data.put("client1", new NodeData(new String[0],"10.0.0.20", new String[]{"10.0.0.21"}));
         data.put("client2", new NodeData(new String[0],"10.0.4.21", new String[]{"10.0.4.20"}));
         data.put("client3", new NodeData(new String[0],"10.0.1.21", new String[0]));
         data.put("client4", new NodeData(new String[0],"10.0.2.21", new String[0]));
