@@ -58,6 +58,10 @@ public class Nodo {
                 if (type == 0x0){
 
                     // change nbsaltos to nbsaltos+1 and send to prox
+                    int nbsaltos = Integer.parseInt(packetData);
+                    nbsaltos++;
+                    packetData = String.valueOf(nbsaltos);
+
                     int video_byte_size = packet.getVideoBytes(sBuf);
                     CelsoPacket newPacket = new CelsoPacket((byte) 0x0, sBuf, video_byte_size, packetData.getBytes(), packetData.getBytes().length);
                     int size = newPacket.getPacketBytes(sBuf);

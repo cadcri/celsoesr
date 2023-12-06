@@ -40,7 +40,7 @@ public class Server {
 
                 imagenb++;
                 int image_length = video.getnextframe(buff);
-                CelsoPacket packet = new CelsoPacket((byte) 0x0, buff, image_length, "0".getBytes(), "0".getBytes().length);
+                CelsoPacket packet = new CelsoPacket((byte) 0x0, buff, image_length, "1".getBytes(), "1".getBytes().length);
                 int size = packet.getPacketBytes(buff);
                 DatagramPacket senddp = new DatagramPacket(buff, size, InetAddress.getByName(data.getProx()), Nodo.PORT);
 
