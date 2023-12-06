@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -cp out src/Server
+java -cp out src/Server "$@"
