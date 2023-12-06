@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -cp out src/Servidor
+java -cp out src/Server
